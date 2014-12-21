@@ -1,0 +1,106 @@
+
+
+
+
+
+
+100 	Wildwood Flower	 	 The Carter Family
+99 	D-I-V-O-R-C-E	 	 Tammy Wynette
+98 	Cool Water	 	 Bob Nolan & The Sons Of The Pioneers
+97 	What a Difference Youve Made In My Life	 	 Ronnie Milsap
+96 	Is Anybody Goin To San Antone	 	 Charley Pride
+95 	Sweet Dreams	 	 Patsy Cline
+94 	Long Black Veil	 	 Lefty Frizzell
+93 	Linda On My Mind	 	 Conway Twitty
+92 	Phantom 309	 	 Red Sovine
+91 	There Goes My Everything	 	 Jack Greene
+90 	Kaw	Liga	 	 Hank Williams, Sr.
+89 	Dont Rock The Jukebox	 	 Alan Jackson
+88 	Cold, Cold Heart	 	 Hank Williams, Sr
+87 	The Year That Clayton Delaney Died	 	 Tom T. Hall
+86 	I Need You	 	 Sonny James
+85 	Uncle Pen	 	 Bill Monroe
+84 	Theres No Getting Over Me	 	 Ronnie Milsap
+83 	Behind Closed Doors	 	 Charlie Rich
+82 	If Tomorrow Never Comes	 	 Garth Brooks
+81 	Friends In Low Places	 	 Garth Brooks
+80 	Silver Wings	 	 Merle Haggard
+79 	You Are My Sunshine	 	 Jimmie Davis
+78 	Sleeping Single in a Double Bed	 	 Barbara Mandrell
+77 	Harper Valley P.T.A.	 	 Jeannie C. Riley
+76 	Luckenbach, Texas	 	 Waylon Jennings
+75 	Shes Got You	 	 Patsy Cline
+74 	Mamas Dont Let Your Babies Grow Up To Be Cowboys	 	 Willie Nelson & Waylon Jennings
+73 	Lead Me On	 	 Conway Twitty & Loretta Lynn
+72 	Jolene	 	 Dolly Parton
+71 	Im Movin On	 	 Hank Snow
+70 	Love in the Hot Afternoon	 	 Gene Watson
+69 	Waltz Across Texas	 	 Ernest Tubb
+68 	Youve Never Been This Far Before	 	 Conway Twitty
+67 	Help Me Make It Through The Night	 	 Sammi Smith
+66 	Heres a Quarter (Call Someone Who Cares)	 	 Travis Tritt
+65 	Crazy Arms	 	 Ray Price
+64 	Sunday Morning Comin Down	 	 Johnny Cash
+63 	God Bless The USA	 	 Lee Greenwood
+62 	Louisiana Woman, Mississippi Man	 	 Conway Twitty & Loretta Lynn
+61 	Pure Love	 	 Ronnie Milsap
+60 	Blue Eyes Crying In The Rain	 	 Willie Nelson
+59 	Rocky Top	 	 The Osborne Brothers
+58 	Okie From Muskogee	 	 Merle Haggard
+57 	I Sang Dixie	 	 Dwight Yoakam
+56 	Good	Hearted Woman	 	 Waylon Jennings
+55 	Bouquet of Roses	 	 Eddy Arnold
+54 	Here In The Real World	 	 Alan Jackson
+53 	Hello Walls	 	 Faron Young
+52 	I Think Ill Just Stay Here and Drink	 	 Merle Haggard
+51 	I Will Always Love You	 	 Dolly Parton
+50 	Tumbling Tumbleweeds	 	 The Sons Of The Pioneers
+49 	Anytime	 	 Eddy Arnold
+48 	Only Daddy Thatll Walk The Line	 	 Waylon Jennings
+47 	Dreaming My Dreams With You	 	 Waylon Jennings
+46 	Delta Dawn	 	 Tanya Tucker
+45 	Hello Darlin	 	 Conway Twitty
+44 	Tight Fittin Jeans	 	 Conway Twitty
+43 	Chiseled In Stone	 	 Vern Gosdin
+42 	I Cant Help It (If Im Still In Love With You)	 	 Hank Williams, Sr.
+41 	The Cattle Call	 	 Eddy Arnold
+40 	The Battle of New Orleans	 	 Johnny Horton
+39 	Wabash Cannonball	 	 Roy Acuff
+38 	Suspicious Minds	 	 Elvis Presley
+37 	Hey Good Lookin	 	 Hank Williams, Sr
+36 	Smoky Mountain Rain	 	 Ronnie Milsap
+35 	Faded Love	 	 Bob Wills And His Texas Playboys
+34 	Forever And Ever, Amen	 	 Randy Travis
+33 	Walking The Floor Over You 	 Ernest Tubb
+32 	Coat Of Many Colors	 	 Dolly Parton
+31 	Make The World Go Away	 	 Eddy Arnold
+30 	Rainy Day Woman	 	 Waylon Jennings
+29 	It Wasnt God Who Made Honky	Tonk Angels	 	 Kitty Wells
+28 	I Cant Stop Loving You	 	 Don Gibson
+27 	Tennessee Waltz	 	 Patti Page
+26 	The Last Thing On My Mind	 	 Porter Wagoner & Dolly Parton
+25 	White Lightning	 	 George Jones
+24 	For The Good Times	 	 Ray Price
+23 	Ring of Fire	 	 Johnny Cash
+22 	Jambalaya	 	 Hank Williams Sr.
+21 	Stand By Your Man	 	 Tammy Wynette
+20 	Tiger by the Tail	 	 Buck Owens
+19 	Oh, Lonesome Me	 	 Don Gibson
+18 	Always On My Mind	 	 Willie Nelson
+17 	Old Dogs, Children, And Watermelon Wine	 	 Tom T Hall
+16 	Coal Miners Daughter	 	 Loretta Lynn
+15 	Mama Tried	 	 Merle Haggard
+14 	I Walk The Line	 	 Johnny Cash
+13 	Workin Man Blues	 	 Merle Haggard
+12 	San Antonio Rose	 	 Bob Wills And His Texas Playboys
+11 	Sixteen Tons	 	 Tennessee Ernie Ford
+10 	The Dance	 	 Garth Brooks
+09 	Hell Have To Go	 	 Jim Reeves
+08 	Lovesick Blues	 	 Hank Williams, Sr.
+07 	Today I Started Loving You Again	 	 Merle Haggard
+06 	Im So Lonesome I Could Cry	 	 Hank Williams, Sr.
+05 	El Paso	 	 Marty Robbins
+04 	I Fall To Pieces	 	 Patsy Cline
+03 	Your Cheatin Heart	 	 Hank Williams, Sr.
+02 	Crazy	 	 Patsy Cline
+01 	He Stopped Loving Her Today	 	 George Jones

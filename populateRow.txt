@@ -1,0 +1,110 @@
+
+
+
+populateRow <- function(ipList,op) {
+    for(j in 1:length(ipList)){
+        splitIp <- strsplit(ipList[j],"|")
+        words <- createMaster(paste('http://api.chartlyrics.com/apiv1.asmx/SearchLyricDirect?artist="',splitIp[2],'"&song="',splitIp[1],'"',sep=""),30,filterOut)
+        intOp <- NULL
+        intOp <- data.frame(ahh= integer(0), always= integer(0), aw= integer(0), beat= integer(0), 
+                         bitch= integer(0), blue= integer(0), blues= integer(0), boogie= integer(0),
+                         cheatin= integer(0), ahh0= integer(0), comin= integer(0), crazy= integer(0),
+                         dance= integer(0), dancing= integer(0), darling= integer(0), death= integer(0),
+                         devil= integer(0), die= integer(0), dog= integer(0), eyes= integer(0),
+                         fall= integer(0), family= integer(0), fight= integer(0), fire= integer(0),
+                         funk= integer(0), funky= integer(0), future= integer(0), gangsta= integer(0),
+                         god= integer(0), gone= integer(0), heart= integer(0), heaven= integer(0),
+                         hello= integer(0), ho= integer(0), honey= integer(0), laugh= integer(0),
+                         legalize= integer(0), lonely= integer(0), loved= integer(0), magic= integer(0),
+                         mama= integer(0), mojo= integer(0), money= integer(0), nigga= integer(0),
+                         niggaz= integer(0), oo= integer(0), ooo= integer(0), party= integer(0),
+                         poor= integer(0), pot= integer(0), rain= integer(0), rights= integer(0),
+                         rock= integer(0), roll= integer(0), roll= integer(0), shit= integer(0),
+                         singin= integer(0), singing= integer(0), sir= integer(0), smoke= integer(0),
+                         songs= integer(0), thang= integer(0), time= integer(0), times= integer(0),
+                         true= integer(0), uhhuh= integer(0), wah= integer(0), wanna= integer(0),
+                         water= integer(0), woman= integer(0), working= integer(0), worry= integer(0),
+                         ya= integer(0), young= integer(0), column75= integer(0), column76= integer(0),
+                         genre = splitIp[3], songSize = as.numeric(length(words)))
+        for(i in 1:length(words)){
+            if (words[i] == 'ahh' && op$ahh == 0) op$ahh == 1 
+            else if (words[i] == 'always' && op$always == 0) op$always == 1 
+            else if (words[i] == 'aw' && op$aw == 0) op$aw == 1 
+            else if (words[i] == 'beat' && op$beat == 0) op$beat == 1 
+            else if (words[i] == 'bitch' && op$bitch == 0) op$bitch == 1 
+            else if (words[i] == 'blue' && op$blue == 0) op$blue == 1 
+            else if (words[i] == 'blues' && op$blues == 0) op$blues == 1 
+            else if (words[i] == 'boogie' && op$boogie == 0) op$boogie == 1 
+            else if (words[i] == 'cheatin' && op$cheatin == 0) op$cheatin == 1 
+            else if (words[i] == 'ahh0' && op$ahh0 == 0) op$ahh0 == 1 
+            else if (words[i] == 'comin' && op$comin == 0) op$comin == 1 
+            else if (words[i] == 'crazy' && op$crazy == 0) op$crazy == 1 
+            else if (words[i] == 'dance' && op$dance == 0) op$dance == 1 
+            else if (words[i] == 'dancing' && op$dancing == 0) op$dancing == 1 
+            else if (words[i] == 'darling' && op$darling == 0) op$darling == 1 
+            else if (words[i] == 'death' && op$death == 0) op$death == 1 
+            else if (words[i] == 'devil' && op$devil == 0) op$devil == 1 
+            else if (words[i] == 'die' && op$die == 0) op$die == 1 
+            else if (words[i] == 'dog' && op$dog == 0) op$dog == 1 
+            else if (words[i] == 'eyes' && op$eyes == 0) op$eyes == 1 
+            else if (words[i] == 'fall' && op$fall == 0) op$fall == 1 
+            else if (words[i] == 'family' && op$family == 0) op$family == 1 
+            else if (words[i] == 'fight' && op$fight == 0) op$fight == 1 
+            else if (words[i] == 'fire' && op$fire == 0) op$fire == 1 
+            else if (words[i] == 'funk' && op$funk == 0) op$funk == 1 
+            else if (words[i] == 'funky' && op$funky == 0) op$funky == 1 
+            else if (words[i] == 'future' && op$future == 0) op$future == 1 
+            else if (words[i] == 'gangsta' && op$gangsta == 0) op$gangsta == 1 
+            else if (words[i] == 'god' && op$god == 0) op$god == 1 
+            else if (words[i] == 'gone' && op$gone == 0) op$gone == 1 
+            else if (words[i] == 'heart' && op$heart == 0) op$heart == 1 
+            else if (words[i] == 'heaven' && op$heaven == 0) op$heaven == 1 
+            else if (words[i] == 'hello' && op$hello == 0) op$hello == 1 
+            else if (words[i] == 'ho' && op$ho == 0) op$ho == 1 
+            else if (words[i] == 'honey' && op$honey == 0) op$honey == 1 
+            else if (words[i] == 'laugh' && op$laugh == 0) op$laugh == 1 
+            else if (words[i] == 'legalize' && op$legalize == 0) op$legalize == 1 
+            else if (words[i] == 'lonely' && op$lonely == 0) op$lonely == 1 
+            else if (words[i] == 'loved' && op$loved == 0) op$loved == 1 
+            else if (words[i] == 'magic' && op$magic == 0) op$magic == 1 
+            else if (words[i] == 'mama' && op$mama == 0) op$mama == 1 
+            else if (words[i] == 'mojo' && op$mojo == 0) op$mojo == 1 
+            else if (words[i] == 'money' && op$money == 0) op$money == 1 
+            else if (words[i] == 'nigga' && op$nigga == 0) op$nigga == 1 
+            else if (words[i] == 'niggaz' && op$niggaz == 0) op$niggaz == 1 
+            else if (words[i] == 'oo' && op$oo == 0) op$oo == 1 
+            else if (words[i] == 'ooo' && op$ooo == 0) op$ooo == 1 
+            else if (words[i] == 'party' && op$party == 0) op$party == 1 
+            else if (words[i] == 'poor' && op$poor == 0) op$poor == 1 
+            else if (words[i] == 'pot' && op$pot == 0) op$pot == 1 
+            else if (words[i] == 'rain' && op$rain == 0) op$rain == 1 
+            else if (words[i] == 'rights' && op$rights == 0) op$rights == 1 
+            else if (words[i] == 'rock' && op$rock == 0) op$rock == 1 
+            else if (words[i] == 'roll' && op$roll == 0) op$roll == 1 
+            else if (words[i] == 'sedated' && op$sedated == 0) op$sedated == 1 
+            else if (words[i] == 'shit' && op$shit == 0) op$shit == 1 
+            else if (words[i] == 'singin' && op$singin == 0) op$singin == 1 
+            else if (words[i] == 'singing' && op$singing == 0) op$singing == 1 
+            else if (words[i] == 'sir' && op$sir == 0) op$sir == 1 
+            else if (words[i] == 'smoke' && op$smoke == 0) op$smoke == 1 
+            else if (words[i] == 'songs' && op$songs == 0) op$songs == 1 
+            else if (words[i] == 'thang' && op$thang == 0) op$thang == 1 
+            else if (words[i] == 'time' && op$time == 0) op$time == 1 
+            else if (words[i] == 'times' && op$times == 0) op$times == 1 
+            else if (words[i] == 'true' && op$true == 0) op$true == 1 
+            else if (words[i] == 'uhhuh' && op$uhhuh == 0) op$uhhuh == 1 
+            else if (words[i] == 'wah' && op$wah == 0) op$wah == 1 
+            else if (words[i] == 'wanna' && op$wanna == 0) op$wanna == 1 
+            else if (words[i] == 'water' && op$water == 0) op$water == 1 
+            else if (words[i] == 'woman' && op$woman == 0) op$woman == 1 
+            else if (words[i] == 'working' && op$working == 0) op$working == 1 
+            else if (words[i] == 'worry' && op$worry == 0) op$worry == 1 
+            else if (words[i] == 'ya' && op$ya == 0) op$ya == 1 
+            else if (words[i] == 'young' && op$young == 0) op$young == 1 
+            else if (words[i] == 'column75' && op$column75 == 0) op$column75 == 1 
+            else if (words[i] == 'column76' && op$column76 == 0) op$column76 == 1 
+        }
+        op <- rbind(op,intOp)
+    }
+    return op 
+}

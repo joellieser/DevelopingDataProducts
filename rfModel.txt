@@ -1,0 +1,37 @@
+library(caret)
+library(stringr)
+set.seed(26)
+
+load("~/Desktop/ddp/populatedLyrics.Rda")
+populatedLyrics$rowSum <- rowSums(populatedLyrics[, c(1:72)])
+trainingRaw <- subset(populatedLyrics,rowSum>0) 
+trainingRaw$rowSum <- NULL
+trainingRaw[,1:72] <- as.factor(as.character(trainingRaw[,1:72]))
+trainingRaw$genre <- gsub("FOlk","folk",trainingRaw$genre)
+trainingRaw$genre <- gsub("folk","Folk",trainingRaw$genre)
+trainingRaw$genre <- gsub("blues","Blues",trainingRaw$genre)
+trainingRaw$genre <- gsub("Heavy Metal","HeavyMetal",trainingRaw$genre)
+trainingRaw$genre <- gsub("Punk","PunkRock",trainingRaw$genre)
+trainingRaw$genre <- gsub("Rock & Rol","Rock",trainingRaw$genre)
+trainingRaw$genre <- gsub("BLues","Blues",trainingRaw$genre)
+trainingRaw$genre <- gsub("R&B","HipHop",trainingRaw$genre)
+trainingRaw$genre <- gsub("PunkRockRock","PunkRock",trainingRaw$genre)
+trainingRaw$genre <- str_trim(trainingRaw$genre)
+trainingCleaned<-trainingRaw[,colSums(is.na(trainingRaw)) == 0]
+trainingRaw$genre <- as.factor(trainingRaw$genre)
+
+
+inTrain <- createDataPartition(y=trainingRaw$genre, p=0.7, list=FALSE)
+training <- trainingRaw[inTrain, ] 
+testing <- trainingRaw[-inTrain, ]
+
+rfTrain  <- train(genre~.,method="rf",data=training,trControl=trainControl(method="cv"),number=3)
+
+rfTrain$finalModel
+
+rfPredict <- predict(rfTrain,newdata=testing)
+
+rfCM <- confusionMatrix(rfPredict, testing$genre)
+
+
+save(rfTrain, file = "~/Desktop/ddp/rf.rda")

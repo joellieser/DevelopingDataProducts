@@ -1,0 +1,101 @@
+1	Hoochie Coochie Man	Muddy Waters
+2	Stormy Monday (Call It Stormy Monday)	T-Bone Walker
+3	Paying the Cost to Be the Boss	B.B. King
+4	Me And The Devil Blues	Robert Johnson
+5	Whisky And Wimmen	John Lee Hooker
+6	Im tore down	Freddie King
+7	Damn Right Ive Got The Blues	Buddy Guy
+8	Mustang Sally	Wilson Pickett
+9	Little Wing	Stevie Ray Vaughan
+10	Give Me Back My Wig	Hound Dog Taylor
+11	Tell Mama (Single)	Etta James
+12	Brick	Albert Collins
+13	Still Got The Blues	Gary Moore
+14	Blues Before Sunrise	Eric Clapton
+15	Got My Mojo Working	Muddy Waters
+16	Smokestack Lightning	Howlin Wolf
+17	Statesboro Blues	The Allman Brothers Band
+18	Dust My Broom	Freddie King
+19	Shake It Up And Go	B.B. King
+20	Too Many Cooks (Spoil the Soup)	Mick Jagger
+21	Red House	Jimi Hendrix
+22	Angel Eyes	Jeff Healey
+23	The Sky Is Crying	Stevie Ray Vaughan
+24	Boom Boom	John Lee Hooker
+25	Midnight Special	Leadbelly
+26	Still Rainin	Jonny Lang
+27	Bad Penny	Rory Gallagher
+28	If I Cant Be First	Koko Taylor
+29	Green Onions	Booker T. & The MGs
+30	Chain of Fools	Aretha Franklin
+31	Mess Around	Ray Charles
+32	Shame Shame Shame	Jimmy Reed
+33	Pride And Joy	Bonnie Raitt
+34	Stone Crazy	Buddy Guy
+35	Hideaway	John Mayall & The Bluesbreakers
+36	Dont Think Twice	Susan Tedeschi
+37	Fancy Man Blues	The Rolling Stones
+38	Trouble No More	The Allman Brothers Band
+39	Trouble In Mind	Big Walter Hornton
+40	Sweet Home Chicago	The Jimmy Rogers All Stars Feat. Stephen Stills
+41	Highway 49	 George Thorogood
+42	Sugar Sweet	Muddy Waters
+43	Sweet Little Angel	B.B. King
+44	Were Gonna Make It (Single Version)	Little Milton
+45	Look At Little Sister	Stevie Ray Vaughan
+46	A Man Of Many Words	Buddy Guy
+47	Black Rose	Eric Clapton
+48	Shine It On	The Allman Brothers Band
+49	Fannie Mae	Elvin Bishop
+50	My Heads in Mississippi	ZZ Top
+51	Big Legs, Tight Skirts	John Lee Hooker
+52	Born Under A Bad Sign	Albert King
+53	Bo Diddley	Bo Diddley
+54	Sacred Ground	John Mooney
+55	Here In The Dark	Taj Mahal
+56	Nobody Knows You When Youre Down and Out	Bessie Smith
+57	I Fell In Love	Susan Tedeschi
+58	Mannish Boy (Live)	The Rolling Stones
+59	Ball N Chain	Big Mama Thornton
+60	Evil	Howlin Wolf
+61	Jelly, Jelly	The Allman Brothers Band
+62	Hellhound On My Trail	Robert Johnson
+63	In The Midnight Hour	Wilson Pickett
+64	It Hurts Me Too	Eric Clapton
+65	Corrine, Corrina	Lightnin Hopkins
+66	Life By The Drop	Stevie Ray Vaughan
+67	Pinetops Boogie Woogie	Pinetop Perkins
+68	Black Cat Bone	Albert Collins/Johnny Copeland
+69	Little Red Rooster	The Rolling Stones
+70	Where Is The Next One Coming From?	Buddy Guy
+71	Black	Cashman
+72	Serves Me Right To Suffer	Jimmy Johnson
+73	You Dont Exist Any More	Lil Ed & The Blues Imperials
+74	Voodoo Chile (Slight Return)	Stevie Ray Vaughan
+75	Think It Over	Dave Hole
+76	300 Pounds Of Heavenly Joy	Big Twist And The Mellow Fellows
+77	Boogie Chillen	John Lee Hooker
+78	Do Right Woman, Do Right Man	Aretha Franklin
+79	Blues Boys Tune	B.B. King
+80	Thing Called Love	Bonnie Raitt
+81	How Many More Years	Howlin Wolf
+82	Minnie the Moocher	Cab Caloway
+83	Everybody Needs Somebody To Love	Wilson Pickett
+84	No Cuttin Loose	James Cotton
+85	Blue Jean Blues	Jeff Healey
+86	Shake Your Money Maker	Elmore James
+87	Cherry Red Wine	Luther Allison
+88	Blow Wind Blow	Muddy Waters
+89	Sinners Prayer	Ray Charles
+90	Crow Jane	Sonny Terry
+91	Down In The Hole	The Rolling Stones
+92	Thats Why Im Crying	Koko Taylor
+93	Born Blind	Sonny Boy Williamson
+94	Going down	Freddie King
+95	Laundromat	Rory Gallagher
+96	Lovin In My Babys Eyes	Taj Mahal
+97	These Blues Is Killing Me	A.C. Reed
+98	Boot Hill	Stevie Ray Vaughan
+99	Stop Breaking Down	The Rolling Stones
+100	Angel From Montgomery	Susan Tedeschi
+101	Stormy Monday	The Allman Brothers Band

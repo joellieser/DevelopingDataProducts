@@ -1,0 +1,30 @@
+#look at tryCatch if this fails
+
+
+createMaster <- function(urls,howMany,filterOut){
+    op <- ''
+    for(i in 1:length(urls)){
+        url <- urls[i]
+        url <- gsub(" ","%20",url)
+    response<-try(getURL(url))
+    doc <- try(xmlTreeParse(response, getDTD = F))
+    myRoot <- try(xmlRoot(doc))
+    xmlData <- try(xmlValue(myRoot[[10]]))
+    pat <- try(paste0("\\b(", paste0(filterOut, collapse="|"), ")\\b"))    
+    goodWords <- try(gsub(pat, "", tolower(xmlData)))
+    op <- try(paste(op,goodWords," "))
+    Sys.sleep(20)
+    }
+    noNewLines <- gsub("\n"," ",op) 
+    spaceFunc <- function(x) return(gsub("^ *|(?<= ) | *$", "", noNewLines, perl=T)) 
+    noDoubleSpaces <- spaceFunc(noNewLines)
+    noPunct <- gsub("[[:punct:]]", "", noDoubleSpaces)
+    final <- gsub("  "," ",noPunct) 
+    wordsSplit <- unlist(strsplit(final, split=" "))
+    myFreq<-table(wordsSplit)
+    myFreqSorted<-sort(myFreq, decreasing=TRUE)
+    return(names(myFreqSorted)[1:as.numeric(howMany)])
+}
+
+
+

@@ -1,0 +1,490 @@
+library(caret)
+library(plyr)
+library(XML)
+library(httr)
+library(RCurl)
+library(scrapeR)
+library(stringr)
+library(data.table)
+library(plyr)
+
+url <- 'http://api.chartlyrics.com/apiv1.asmx/SearchLyricDirect?artist="Dolly Parton"&song="Joshua"'
+url <- gsub(" ","%20",url)
+response <- GET(url)
+xml <- xmlInternalTreeParse(content(response,type="text"))
+xmlData <- xmlToList(xml)
+filterOut <- c("a", "about", "after", "all", "also", "an", "and", "another", "any", "are",
+               "as", "at", "be", "because", "been", "before", "being", "between", "both", 
+               "but", "by", "came", "can", "come", "could", "did", "do", "does", "each", 
+               "else", "for", "from", "get", "got", "had", "has", "have", "here", "how", 
+               "i","if", "in", "into", "is", "it", "its", "just", "like", "me", "make", "many", 
+               "might", "of", "on", "only", "or", "other", "our", "out", "over", "re", "same", 
+               "should", "since", "so", "some", "still", "such", "take", "than", "that", "the", 
+               "then", "there", "these", "they", "them", "this", "those", "through", "to", "too", "up", "use", 
+               "way", "well", "went", "were", "what", "when", "where", "which", "while", "will", 
+               "with", "would", "you","your")
+
+pat <- paste0("\\b(", paste0(filterOut, collapse="|"), ")\\b")    
+goodWords <- gsub(pat, "", tolower(xmlData$Lyric))
+noNewLines <- gsub("\n"," ",goodWords) 
+spaceFunc <- function(x) return(gsub("^ *|(?<= ) | *$", "", noNewLines, perl=T)) 
+noDoubleSpaces <- spaceFunc(noNewLines)
+noPunct <- gsub("[[:punct:]]", "", noDoubleSpaces)
+final <- gsub("  "," ",noPunct) 
+wordsSplit <- unlist(strsplit(final, split=" "))
+myFreq<-table(wordsSplit)
+myFreqSorted<-sort(myFreq, decreasing=TRUE)
+topCountry <- names(myFreqSorted)[1:20]
+
+------------------------------------------------------------------
+
+library(caret)
+library(plyr)
+library(XML)
+library(httr)
+library(RCurl)
+library(scrapeR)
+library(stringr)
+library(data.table)
+library(plyr)
+
+filterOut <- c("a", "about", "after", "all", "also", "an", "and", "another", "any", "are",
+               "as", "at", "be", "because", "been", "before", "being", "between", "both", 
+               "but", "by", "came", "can", "come", "could", "did", "do", "does", "each", 
+               "else", "for", "from", "get", "got", "had", "has", "have", "he","his","her","hers",
+               "here", "how", "we","ll","my","s","m","n","t","d",
+               "i","if", "in", "into", "is", "it", "its", "just", "like", "me", "make", "many", 
+               "might", "of", "on", "only", "or", "other", "our", "out", "over", "re", "same", 
+               "should", "since", "so", "some", "still", "such", "take", "than", "that", "the", 
+               "then", "there", "these", "they", "them", "this", "those", "through", "to", "too", "up", "use", 
+               "way", "well", "went", "were", "what", "when", "where", "which", "while", "will", "wont",
+               "baby","back","cause","don","down","ever","every","go","gonna","good","hey","him","know",
+               "let","love","no","not","now","oh","one","said","say","she","thing","ve","was","yeah",
+               "again","ain","am","around","away","day","everybody"
+               ,"feel","keep","life","little","long","look","man","never"
+               ,"night","ooh","right","see","time","want","who","woman","yes",
+               "with", "would", "you","your")
+    
+
+x <- c('Smokey Robinson|Shop Around|HipHop','Weezer|Buddy Holly|Alternative') 
+x <- strsplit(x, "|", fixed = TRUE)
+splitIp <- ldply(x)
+names(splitIp) <- c("artist","song","genre")
+splitIp$url <- gsub(" ","%20",paste('http://api.chartlyrics.com/apiv1.asmx/SearchLyricDirect?artist="',str_trim(splitIp$artist),'"&song="',str_trim(splitIp$song),'"',sep=''))
+
+removeFirstNA <- function(ip){sub('NA ','',ip)}
+
+createMaster <- function(urls,howMany,filterOut){
+    op <- ''
+    for(i in 1:length(urls)){
+        url <- urls[i]
+        url <- gsub(" ","%20",url)
+    response<-try(getURL(url))
+    doc <- try(xmlTreeParse(response, getDTD = F))
+    myRoot <- try(xmlRoot(doc))
+    xmlData <- try(xmlValue(myRoot[[10]]))
+    pat <- try(paste0("\\b(", paste0(filterOut, collapse="|"), ")\\b"))    
+    goodWords <- try(gsub(pat, "", tolower(xmlData)))
+    op <- try(paste(op,goodWords," "))
+    Sys.sleep(20)
+    }
+    noNewLines <- gsub("\n"," ",op) 
+    spaceFunc <- function(x) return(gsub("^ *|(?<= ) | *$", "", noNewLines, perl=T)) 
+    noDoubleSpaces <- spaceFunc(noNewLines)
+    noPunct <- gsub("[[:punct:]]", "", noDoubleSpaces)
+    final <- gsub("  "," ",noPunct) 
+    wordsSplit <- unlist(strsplit(final, split=" "))
+    myFreq<-table(wordsSplit)
+    myFreqSorted<-sort(myFreq, decreasing=TRUE)
+    return(names(myFreqSorted)[1:as.numeric(howMany)])
+}
+
+createTraining <- function(urls,filterOut){
+    op <- data.frame(genre=character(0),lyricsList=character(0),stringsAsFactors=FALSE)
+    mySize <- nrow(urls)
+    for(i in 1:mySize){
+        response<-try(getURL(urls[i,]$url))
+        doc <- try(xmlTreeParse(response, getDTD = F))
+        myRoot <- try(xmlRoot(doc))
+        xmlData <- try(xmlValue(myRoot[[10]]))
+        pat <- try(paste0("\\b(", paste0(filterOut, collapse="|"), ")\\b"))    
+        goodWords <- try(gsub(pat, "", tolower(xmlData)))
+        noNewLines <- gsub("\n"," ",goodWords) 
+        spaceFunc <- function(x) return(gsub("^ *|(?<= ) | *$", "", noNewLines, perl=T)) 
+        noDoubleSpaces <- spaceFunc(noNewLines)
+        noPunct <- gsub("[[:punct:]]", "", noDoubleSpaces)
+        final <- gsub("  "," ",noPunct) 
+        wordsSplit <- unlist(strsplit(final, split=" "))
+        myFreq<-table(wordsSplit)
+        myFreqSorted<-sort(myFreq, decreasing=TRUE)
+        op[i,]$lyricsList <- try(as.character(substring(paste("", names(myFreqSorted), sep=",", collapse=""),2)))
+        op[i,]$genre <- as.character(urls[i,]$genre)
+        print(paste("Completed Number ",as.character(i)," of ",as.character(mySize)," total",sep=""))
+        Sys.sleep(21)
+    }
+    return(op) 
+}
+
+populateRow <- function(ipList) {
+    op <- data.frame(cry= integer(0), dark= integer(0), death= integer(0), die= integer(0),
+                  	fear= integer(0), fight= integer(0), fighting= integer(0), hell= integer(0),
+                  	power= integer(0), rock= integer(0), roll= integer(0), black= integer(0),
+                  	care= integer(0), god= integer(0), soul= integer(0), tonight= integer(0),
+                  	bad= integer(0), believe= integer(0), blues= integer(0), chain= integer(0),
+                  	gone= integer(0), lord= integer(0), lovin= integer(0), mess= integer(0),
+                  	shame= integer(0), working= integer(0), arms= integer(0), heart= integer(0),
+                  	loved= integer(0), loving= integer(0), mind= integer(0), old= integer(0),
+                  	rain= integer(0), world= integer(0), body= integer(0), boogie= integer(0),
+                  	dance= integer(0), dancing= integer(0), groove= integer(0), move= integer(0),
+                  	music= integer(0), shake= integer(0), free= integer(0), fuck= integer(0),
+                  	future= integer(0), kill= integer(0), money= integer(0), punk= integer(0),
+                  	rise= integer(0), smash= integer(0), beat= integer(0), bitch= integer(0),
+                  	gangsta= integer(0), goin= integer(0), gotta= integer(0), nigga= integer(0),
+                  	rhyme= integer(0), shit= integer(0), stand= integer(0), yo= integer(0),
+                  	angel= integer(0), boom= integer(0), darling= integer(0), dreadlocks= integer(0),
+                  	jammin= integer(0), poor= integer(0), rights= integer(0), alone= integer(0),
+                  	fool= integer(0), please= integer(0), ride= integer(0), touch= integer(0),
+                  	genre = character(0), songSize = integer(0),stringsAsFactors=FALSE)
+	for(j in 1:nrow(ipList)){
+	    op[j,]$genre <- ipList[j,]$genre
+    	words <- strsplit(ipList[j,]$lyricsList,",")
+    	words <- words[[1]]
+	    op[j,]$songSize <- length(words)
+	    if(length(words) > 0){
+        for(i in 1:length(words)){
+            if(!is.na(words[i]) && nchar(words[i]) > 1){
+            if(words[i] == 'cry'             && is.na(op[j,]$cry))         op[j,]$cry <- 1
+            else if(words[i] == 'dark'       && is.na(op[j,]$dark))        op[j,]$dark <- 1
+            else if(words[i] == 'death'      && is.na(op[j,]$death))       op[j,]$death <- 1
+            else if(words[i] == 'die'        && is.na(op[j,]$die))         op[j,]$die <- 1
+         	else if (words[i] == 'fear'      && is.na(op[j,]$fear))        op[j,]$fear <- 1
+         	else if (words[i] == 'fight'     && is.na(op[j,]$fight))       op[j,]$fight <- 1
+         	else if (words[i] == 'fighting'  && is.na(op[j,]$fighting))    op[j,]$fighting <- 1
+         	else if (words[i] == 'hell'      && is.na(op[j,]$hell))        op[j,]$hell <- 1
+         	else if (words[i] == 'power'     && is.na(op[j,]$power))       op[j,]$power <- 1
+         	else if (words[i] == 'rock'      && is.na(op[j,]$rock))        op[j,]$rock <- 1
+         	else if (words[i] == 'roll'      && is.na(op[j,]$roll))        op[j,]$roll <- 1
+         	else if (words[i] == 'black'     && is.na(op[j,]$black))       op[j,]$black <- 1
+         	else if (words[i] == 'care'      && is.na(op[j,]$care))        op[j,]$care <- 1
+         	else if (words[i] == 'god'       && is.na(op[j,]$god))         op[j,]$god <- 1
+         	else if (words[i] == 'soul'      && is.na(op[j,]$soul))        op[j,]$soul <- 1
+         	else if (words[i] == 'tonight'   && is.na(op[j,]$tonight))     op[j,]$tonight <- 1
+         	else if (words[i] == 'bad'       && is.na(op[j,]$bad))         op[j,]$bad <- 1
+         	else if (words[i] == 'believe'   && is.na(op[j,]$believe))     op[j,]$believe <- 1
+         	else if (words[i] == 'blues'     && is.na(op[j,]$blues))       op[j,]$blues <- 1
+         	else if (words[i] == 'chain'     && is.na(op[j,]$chain))       op[j,]$chain <- 1
+         	else if (words[i] == 'gone'      && is.na(op[j,]$gone))        op[j,]$gone <- 1
+         	else if (words[i] == 'lord'      && is.na(op[j,]$lord))        op[j,]$lord <- 1
+         	else if (words[i] == 'lovin'     && is.na(op[j,]$lovin))       op[j,]$lovin <- 1
+         	else if (words[i] == 'mess'      && is.na(op[j,]$mess))        op[j,]$mess <- 1
+         	else if (words[i] == 'shame'     && is.na(op[j,]$shame))       op[j,]$shame <- 1
+         	else if (words[i] == 'working'   && is.na(op[j,]$working))     op[j,]$working <- 1
+         	else if (words[i] == 'arms'      && is.na(op[j,]$arms))        op[j,]$arms <- 1
+         	else if (words[i] == 'heart'     && is.na(op[j,]$heart))       op[j,]$heart <- 1
+         	else if (words[i] == 'loved'     && is.na(op[j,]$loved))       op[j,]$loved <- 1
+         	else if (words[i] == 'loving'    && is.na(op[j,]$loving))      op[j,]$loving <- 1
+         	else if (words[i] == 'mind'      && is.na(op[j,]$mind))        op[j,]$mind <- 1
+         	else if (words[i] == 'old'       && is.na(op[j,]$old))         op[j,]$old <- 1
+         	else if (words[i] == 'rain'      && is.na(op[j,]$rain))        op[j,]$rain <- 1
+         	else if (words[i] == 'world'     && is.na(op[j,]$world))       op[j,]$world <- 1
+         	else if (words[i] == 'body'      && is.na(op[j,]$body))        op[j,]$body <- 1
+         	else if (words[i] == 'boogie'    && is.na(op[j,]$boogie))      op[j,]$boogie <- 1
+         	else if (words[i] == 'dance'     && is.na(op[j,]$dance))       op[j,]$dance <- 1
+         	else if (words[i] == 'dancing'   && is.na(op[j,]$dancing))     op[j,]$dancing <- 1
+         	else if (words[i] == 'groove'    && is.na(op[j,]$groove))      op[j,]$groove <- 1
+         	else if (words[i] == 'move'       && is.na(op[j,]$move))       op[j,]$move <- 1
+         	else if (words[i] == 'music'      && is.na(op[j,]$music))      op[j,]$music <- 1
+         	else if (words[i] == 'shake'      && is.na(op[j,]$shake))      op[j,]$shake <- 1
+         	else if (words[i] == 'free'       && is.na(op[j,]$free))       op[j,]$free <- 1
+         	else if (words[i] == 'fuck'       && is.na(op[j,]$fuck))       op[j,]$fuck <- 1
+         	else if (words[i] == 'future'     && is.na(op[j,]$future))     op[j,]$future <- 1
+         	else if (words[i] == 'kill'       && is.na(op[j,]$kill))       op[j,]$kill <- 1
+         	else if (words[i] == 'money'      && is.na(op[j,]$money))      op[j,]$money <- 1
+         	else if (words[i] == 'punk'       && is.na(op[j,]$punk))       op[j,]$punk <- 1
+         	else if (words[i] == 'rise'       && is.na(op[j,]$rise))       op[j,]$rise <- 1
+         	else if (words[i] == 'smash'      && is.na(op[j,]$smash))      op[j,]$smash <- 1
+         	else if (words[i] == 'beat'       && is.na(op[j,]$beat))       op[j,]$beat <- 1
+         	else if (words[i] == 'bitch'      && is.na(op[j,]$bitch))      op[j,]$bitch <- 1
+         	else if (words[i] == 'gangsta'    && is.na(op[j,]$gangsta))    op[j,]$gangsta <- 1
+         	else if (words[i] == 'goin'       && is.na(op[j,]$goin))       op[j,]$goin <- 1
+         	else if (words[i] == 'gotta'      && is.na(op[j,]$gotta))      op[j,]$gotta <- 1
+         	else if (words[i] == 'nigga'      && is.na(op[j,]$nigga))      op[j,]$nigga <- 1
+         	else if (words[i] == 'rhyme'      && is.na(op[j,]$rhyme))      op[j,]$rhyme <- 1
+         	else if (words[i] == 'shit'       && is.na(op[j,]$shit))       op[j,]$shit <- 1
+         	else if (words[i] == 'stand'      && is.na(op[j,]$stand))      op[j,]$stand <- 1
+         	else if (words[i] == 'yo'         && is.na(op[j,]$yo))         op[j,]$yo <- 1
+         	else if (words[i] == 'angel'      && is.na(op[j,]$angel))      op[j,]$angel <- 1
+         	else if (words[i] == 'boom'       && is.na(op[j,]$boom))       op[j,]$boom <- 1
+         	else if (words[i] == 'darling'    && is.na(op[j,]$darling))    op[j,]$darling <- 1
+         	else if (words[i] == 'dreadlocks' && is.na(op[j,]$dreadlocks)) op[j,]$dreadlocks <- 1
+         	else if (words[i] == 'jammin'     && is.na(op[j,]$jammin))     op[j,]$jammin <- 1
+         	else if (words[i] == 'poor'       && is.na(op[j,]$poor))       op[j,]$poor <- 1
+         	else if (words[i] == 'rights'     && is.na(op[j,]$rights))     op[j,]$rights <- 1
+         	else if (words[i] == 'alone'      && is.na(op[j,]$alone))      op[j,]$alone <- 1
+         	else if (words[i] == 'fool'       && is.na(op[j,]$fool))       op[j,]$fool <- 1
+         	else if (words[i] == 'please'     && is.na(op[j,]$please))     op[j,]$please <- 1
+         	else if (words[i] == 'ride'       && is.na(op[j,]$ride))       op[j,]$ride <- 1
+         	else if (words[i] == 'touch'      && is.na(op[j,]$touch))      op[j,]$touch <- 1
+    	}}}
+	}
+	if(length(words) > 0){
+	    op[is.na(op)] <- 0
+	    return(op)
+	}    
+} 
+
+
+
+createDataSet <- function(letter){
+    ip <- read.table(paste("~/Desktop/",letter,".tsv", sep=""),sep="\t") 
+    names(ip) <- c("song","artist","genre")
+    ip <- ip[c("artist","song","genre")]
+    ip$url <- gsub(" ","%20",paste('http://api.chartlyrics.com/apiv1.asmx/SearchLyricDirect?artist="',str_trim(ip$artist),'"&song="',str_trim(ip$song),'"',sep=''))
+    return(ip)
+}
+
+c <- createDataSet('c')
+h <- createDataSet('r')
+h$genre <- 'HipHop'
+b <- createDataSet('b')
+b$genre <- 'Blues'
+r <- createDataSet('rock')
+r$genre<-'Rock'
+d <- createDataSet('d')
+d$genre <- 'Dance'
+hm <- createDataSet('hm')
+hm$genre <- 'HeavyMetal'
+reg <- createDataSet('reg')
+a <- createDataSet('a')
+a$genre <- 'Alternative'
+p <- createDataSet('p')
+p$genre <- 'Punk'
+
+top500<- read.table("~/Desktop/top500.txt",sep="|")
+names(top500) <- c("artist","song","genre")
+top500$url <- gsub(" ","%20",paste('http://api.chartlyrics.com/apiv1.asmx/SearchLyricDirect?artist="',str_trim(top500$artist),'"&song="',str_trim(top500$song),'"',sep=''))
+
+fullDataSet <- rbind(c,h,b,r,d,hm,reg,a,p,top500)
+fullDataSet <- fullDataSet[!duplicated(fullDataSet[c("song","artist","genre")]),]
+
+Sys.time()
+rawTraining <- createTraining(fullDataSet,filterOut)
+Sys.time()
+
+Sys.time()
+rawTraining1 <- createTraining(fullDataSet[1:50,],filterOut)
+x <- subset(x, lyricsList!='')
+x2 <- populateRow(x)
+rawTraining1b <- populateRow(rawTraining1)
+rawTraining2 <- createTraining(fullDataSet[51:100,],filterOut)
+rawTraining2b <- populateRow(rawTraining2)
+rawTraining3 <- createTraining(fullDataSet[101:150,],filterOut)
+rawTraining4 <- createTraining(fullDataSet[151:200,],filterOut)
+rawTraining5 <- createTraining(fullDataSet[201:250,],filterOut)
+rawTraining6 <- createTraining(fullDataSet[251:300,],filterOut)
+rawTraining7 <- createTraining(fullDataSet[301:350,],filterOut)
+rawTraining8 <- createTraining(fullDataSet[351:400,],filterOut)
+rawTraining9 <- createTraining(fullDataSet[401:450,],filterOut)
+rawTraining10 <- createTraining(fullDataSet[451:500,],filterOut)
+rawTraining11 <- createTraining(fullDataSet[501:550,],filterOut)
+rawTraining12 <- createTraining(fullDataSet[551:600,],filterOut)
+rawTraining13 <- createTraining(fullDataSet[601:650,],filterOut)
+rawTraining14 <- createTraining(fullDataSet[651:700,],filterOut)
+rawTraining15 <- createTraining(fullDataSet[701:750,],filterOut)
+rawTraining16 <- createTraining(fullDataSet[751:800,],filterOut)
+rawTraining17 <- createTraining(fullDataSet[801:850,],filterOut)
+rawTraining18 <- createTraining(fullDataSet[851:900,],filterOut)
+rawTraining19 <- createTraining(fullDataSet[901:950,],filterOut)
+rawTraining20 <- createTraining(fullDataSet[951:1000,],filterOut)
+rawTraining21 <- createTraining(fullDataSet[1001:1050,],filterOut)
+rawTraining22 <- createTraining(fullDataSet[1051:1100,],filterOut)
+rawTraining23 <- createTraining(fullDataSet[1101:1150,],filterOut)
+rawTraining24 <- createTraining(fullDataSet[1151:1200,],filterOut)
+rawTraining25 <- createTraining(fullDataSet[1201:1250,],filterOut)
+rawTraining26 <- createTraining(fullDataSet[1251:1300,],filterOut)
+rawTraining27 <- createTraining(fullDataSet[1301:1350,],filterOut)
+rawTraining28 <- createTraining(fullDataSet[1351:1383,],filterOut)
+
+rawTraining3b <- populateRow(rawTraining3)
+rawTraining4b <- populateRow(rawTraining4)
+rawTraining5b <- populateRow(rawTraining5)
+rawTraining6b <- populateRow(rawTraining6)
+rawTraining7b <- populateRow(rawTraining7)
+rawTraining8b <- populateRow(rawTraining8)
+rawTraining9b <- populateRow(rawTraining9)
+rawTraining10b <- populateRow(rawTraining10)
+rawTraining11b <- populateRow(rawTraining11)
+rawTraining12b <- populateRow(rawTraining12)
+rawTraining13b <- populateRow(rawTraining13)
+rawTraining14b <- populateRow(rawTraining14)
+rawTraining15b <- populateRow(rawTraining15)
+rawTraining16b <- populateRow(rawTraining16)
+rawTraining17b <- populateRow(rawTraining17)
+rawTraining18b <- populateRow(rawTraining18)
+rawTraining19b <- populateRow(rawTraining19)
+rawTraining20b <- populateRow(rawTraining20)
+rawTraining21b <- populateRow(rawTraining21)
+rawTraining22b <- populateRow(rawTraining22)
+rawTraining23b <- populateRow(rawTraining23)
+rawTraining24b <- populateRow(rawTraining24)
+rawTraining25b <- populateRow(rawTraining25)
+rawTraining26b <- populateRow(rawTraining26)
+rawTraining27b <- populateRow(rawTraining27)
+rawTraining28b <- populateRow(rawTraining28)
+
+Sys.time()
+
+populatedLyrics = rbind(rawTraining1b,rawTraining2b,rawTraining3b,rawTraining4b,rawTraining5b,rawTraining6b,
+                        rawTraining7b,rawTraining8b,rawTraining9b,rawTraining10b,rawTraining11b,rawTraining12b,
+                        rawTraining13b,rawTraining14b,rawTraining15b,rawTraining16b,rawTraining17b,rawTraining18b,
+                        rawTraining19b,rawTraining20b,rawTraining21b,rawTraining22b,rawTraining23b,rawTraining24b,
+                        rawTraining25b,rawTraining26b,rawTraining27b,rawTraining28b)
+
+save(completeRawLyrics,file="~/Desktop/completeRawLyrics.Rda")
+
+Sys.time()
+topCountry <- createMaster(c,41,filterOut)
+Sys.time()
+topCountry
+Sys.time()
+topRap <- createMaster(h,41,filterOut)
+Sys.time()
+topRap
+Sys.time()
+topDance <- createMaster(d,41,filterOut)
+Sys.time()
+topDance
+Sys.time()
+topRock <- createMaster(r,41,filterOut)
+Sys.time()
+topRock
+Sys.time()
+topHeavyMetal <- createMaster(hm,41,filterOut)
+Sys.time()
+topHeavyMetal
+Sys.time()
+topReggae <- createMaster(reg,41,filterOut)
+Sys.time()
+topReggae
+Sys.time()
+topPunk <- createMaster(p,41,filterOut)
+Sys.time()
+topPunk
+Sys.time()
+topAlt <- createMaster(a,41,filterOut)
+Sys.time()
+topAlt
+Sys.time()
+topBlues <- createMaster(b,41,filterOut)
+Sys.time()
+topBlues
+
+
+Sys.time()
+topCountry <- createMaster(countryUrls,41,filterOut)
+
+topCountry <- createMaster(words,41,filterOut)
+Sys.time()
+topRap <- createMaster(rapUrls,41,filterOut)
+Sys.time()
+topRap <- createMaster(h,41,filterOut)
+Sys.time()
+topRap
+topRB <- createMaster(rbUrls,41,filterOut)
+Sys.time()
+topRB
+topHardRock <- createMaster(hardRockUrls,41,filterOut)
+Sys.time()
+topHardRock
+topHeavyMetal <- createMaster(heavyMetalUrls,41,filterOut)
+Sys.time()
+topHeavyMetal
+topFolk <- createMaster(folkUrls,41,filterOut)
+Sys.time()
+topFolk
+topBlues <- createMaster(bluesUrls,41,filterOut)
+Sys.time()
+topBlues
+topRock <- createMaster(rockUrls,41,filterOut)
+Sys.time()
+topRock
+topPunk <- createMaster(punkUrls,41,filterOut)
+Sys.time()
+topPunk
+topAlt <- createMaster(altUrls,41,filterOut)
+Sys.time()
+topAlt
+topReg <- createMaster(regUrls,41,filterOut)
+Sys.time()
+topReg
+topDan <- createMaster(danUrls,41,filterOut)
+Sys.time()
+topDan
+
+
+
+
+
+
+-------------ASSEMBLE COLUMN LIST-------------------------------
+
+populateRow <- function(ipList,op) {
+    for(j in 1:length(ipList)):
+        splitIp <- strsplit(ipList[j],"|")
+        words <- createMaster(paste('http://api.chartlyrics.com/apiv1.asmx/SearchLyricDirect?artist="',splitIp[2],'"&song="',splitIp[1],'"',sep=""),30,filterOut)
+        intOp <- NULL
+        intOp <- data.frame(column1= integer(0), column2= integer(0), column3= integer(0), column4= integer(0), 
+                         column5= integer(0), column6= integer(0), column7= integer(0), column8= integer(0),
+                         column9= integer(0), column10= integer(0), column11= integer(0), column12= integer(0),
+                         column13= integer(0), column14= integer(0), column15= integer(0), column16= integer(0),
+                         column17= integer(0), column18= integer(0), column19= integer(0), column20= integer(0),
+                         column21= integer(0), column22= integer(0), column23= integer(0), column24= integer(0),
+                         column25= integer(0), column26= integer(0), column27= integer(0), column28= integer(0),
+                         column29= integer(0), column30= integer(0), column31= integer(0), column32= integer(0),
+                         genre = splitIp[3], songSize = as.numeric(length(words)))
+        for(i in 1:length(words)):
+            if (words[i] == 'column1' && op$column1 == 0) op$column1 == 1 
+            else if (words[i] == 'column2' && op$column2 == 0) op$column2 == 1 
+            else if (words[i] == 'column3' && op$column3 == 0) op$column3 == 1 
+            else if (words[i] == 'column4' && op$column4 == 0) op$column4 == 1 
+            else if (words[i] == 'column5' && op$column5 == 0) op$column5 == 1 
+            else if (words[i] == 'column6' && op$column6 == 0) op$column6 == 1 
+            else if (words[i] == 'column7' && op$column7 == 0) op$column7 == 1 
+            else if (words[i] == 'column8' && op$column8 == 0) op$column8 == 1 
+            else if (words[i] == 'column9' && op$column9 == 0) op$column9 == 1 
+            else if (words[i] == 'column10' && op$column10 == 0) op$column10 == 1 
+            else if (words[i] == 'column11' && op$column11 == 0) op$column11 == 1 
+            else if (words[i] == 'column12' && op$column12 == 0) op$column12 == 1 
+            else if (words[i] == 'column13' && op$column13 == 0) op$column13 == 1 
+            else if (words[i] == 'column14' && op$column14 == 0) op$column14 == 1 
+            else if (words[i] == 'column15' && op$column15 == 0) op$column15 == 1 
+            else if (words[i] == 'column16' && op$column16 == 0) op$column16 == 1 
+            else if (words[i] == 'column17' && op$column17 == 0) op$column17 == 1 
+            else if (words[i] == 'column18' && op$column18 == 0) op$column18 == 1 
+            else if (words[i] == 'column19' && op$column19 == 0) op$column19 == 1 
+            else if (words[i] == 'column20' && op$column20 == 0) op$column20 == 1 
+            else if (words[i] == 'column21' && op$column21 == 0) op$column21 == 1 
+            else if (words[i] == 'column22' && op$column22 == 0) op$column22 == 1 
+            else if (words[i] == 'column23' && op$column23 == 0) op$column23 == 1 
+            else if (words[i] == 'column24' && op$column24 == 0) op$column24 == 1 
+            else if (words[i] == 'column25' && op$column25 == 0) op$column25 == 1 
+            else if (words[i] == 'column26' && op$column26 == 0) op$column26 == 1 
+            else if (words[i] == 'column27' && op$column27 == 0) op$column27 == 1 
+            else if (words[i] == 'column28' && op$column28 == 0) op$column28 == 1 
+            else if (words[i] == 'column29' && op$column29 == 0) op$column29 == 1 
+            else if (words[i] == 'column30' && op$column30 == 0) op$column30 == 1 
+            else if (words[i] == 'column31' && op$column31 == 0) op$column31 == 1 
+            else if (words[i] == 'column32' && op$column32 == 0) op$column32 == 1 
+        op <- rbind(op,intOp)
+    return op 
+}
+training <- data.frame(column1= integer(0), column2= integer(0), column3= integer(0), column4= integer(0), 
+                       column5= integer(0), column6= integer(0), column7= integer(0), column8= integer(0),
+                       column9= integer(0), column10= integer(0), column11= integer(0), column12= integer(0),
+                       column13= integer(0), column14= integer(0), column15= integer(0), column16= integer(0),
+                       column17= integer(0), column18= integer(0), column19= integer(0), column20= integer(0),
+                       column21= integer(0), column22= integer(0), column23= integer(0), column24= integer(0),
+                       column25= integer(0), column26= integer(0), column27= integer(0), column28= integer(0),
+                       column29= integer(0), column30= integer(0), column31= integer(0), column32= integer(0),
+                       genre = character(), songSize=numeric(0))
+training <- populateRow(urlList,training)

@@ -1,0 +1,101 @@
+1	Happy	The Rolling Stones
+2	Layla	Derek & The Dominos
+3	Highway To Hell	AC/DC
+4	Cant You Hear Me Knocking	The Rolling Stones
+5	Virtue And Vice	The Black Crowes
+6	Smells Like Teen Spirit	Nirvana
+7	Violet	Hole
+8	Blitzkrieg Bop	The Ramones
+9	Whipping Post	The Allman Brothers Band
+10	Paradise City	Guns N Roses
+11	Interstate Love Song	Stone Temple Pilots
+12	Black Dog	Led Zeppelin
+13	Hold On! Im Comin	Eric Clapton with BB King
+14	Remember (Walking In The Sand)	Aerosmith
+15	Self-Esteem	The Offspring
+16	Everything Zen	Bush
+17	Pour Some Sugar On Me	Def Leppard
+18	You Give Love a Bad Name	Bon Jovi
+19	Born to Run	Bruce Springsteen
+20	Aint Talkin ‘Bout Love	Van Halen
+21	Sway	The Rolling Stones
+22	Whole Lotta Rosie	AC/DC
+23	Man in the Box	Alice in Chains
+24	Sympathy For The Devil	The Rolling Stones
+25	Heart Shaped Box	Nirvana
+26	Nobodys Fool	Cinderella
+27	Lonely Is the Night	Billy Squier
+28	Working Man	Rush
+29	Spoonman	Soundgarden
+30	Bringin on the Heartbreak	Def Leppard
+31	Everybody Wants Some!!	Van Halen
+32	Dissident	Pearl Jam
+33	Dream On	Aerosmith
+34	All Day and All of the Night	The Kinks
+35	All My Love	Led Zeppelin
+36	Sweet Child O Mine	Guns N Roses
+37	Bell Bottom Blues	Derek & The Dominos
+38	My Brain Is Hanging Upside Down (Bonzo Goes To Bitburg)	The Ramones
+39	Melissa	The Allman Brothers Band
+40	Lithium	Nirvana
+41	Touch Too Much	AC/DC
+42	I Alone	Live
+43	Fire Woman	Cult
+44	Snowblind	Styx
+45	Somebody Get Me a Doctor	Van Halen
+46	I Remember You	Skid Row
+47	Fall to Pieces	Velvet Revolver
+48	Stay With Me	The Faces
+49	Wont Get Fooled Again	The Who
+50	Better Man	Pearl Jam
+51	Iron Man	Black Sabbath
+52	Statesboro Blues	The Allman Brothers Band
+53	Dont Run Wild	The Del Fuegos
+54	Like A Rolling Stone	Bob Dylan
+55	Holiday	Green Day
+56	Louie, Louie	The Kingsmen
+57	Communication Breakdown	Led Zeppelin
+58	Flirtin With Disaster	Molly Hatchet
+59	Slow Ride (Live)	Foghat
+60	Like A Hurricane	Neil Young
+61	Under My Wheels	Alice Cooper
+62	Precious	The Pretenders
+63	Enter Sandman	Metallica
+64	Round and Round	Ratt
+65	By The Way	Red Hot Chili Peppers
+66	Somebody to Shove	Soul Asylum
+67	Lay It on the Line	Triumph
+68	May I Have A Talk With You	Stevie Ray Vaughan
+69	Downbound Train	Bruce Springsteen
+70	Bitter Tears	INXS
+71	Comfortably Numb	Pink Floyd
+72	Volcano Girls	Veruca Salt
+73	Rooster	Alice in Chains
+74	Blind Man	Aerosmith
+75	Please Be With Me	Eric Clapton
+76	Expresso Love	Dire Straits
+77	How You Remind Me	Nickelback
+78	Low Budget	The Kinks
+79	Red Hill Mining Town	U2
+80	Must of Got Lost	The J. Geils Band
+81	Somebody Knockin	Izzy Stradlin 
+82	Dirty Water (Red Sox Post Game)	Dropkick Murphys
+83	Suffragette City	David Bowie
+84	Possum Kingdom	The Toadies
+85	You Got Another Thing Coming	Judas Priest
+86	Teenage Lobotomy	The Ramones
+87	Rebel Yell	Billy Idol
+88	Whats Your Name	Lynyrd Skynyrd
+89	Cumbersome	Seven Mary Three
+90	One Last Kiss	J. Geils Band
+91	Are You Gonna Be My Girl	Jet
+92	Rachael (LP Version)	Buffalo Tom
+93	Katmandu	Bob Seger
+94	Addicted to Love	Robert Palmer
+95	Lawyers, Guns And Money	Warren Zevon
+96	Mustang Sally	Wilson Pickett
+97	Whats The Frequency, Kenneth?	REM
+98	Who Do You Want to Be	Oingo Boingo
+99	Radar Love	Golden Earring
+100	(I Know) Im Losing You	Rod Stewart
+101	While My Guitar Gently Weeps	The Beatles – The Beatles
